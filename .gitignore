@@ -1,0 +1,12 @@
+# Credentials — never commit this
+.env
+
+# Backup repository and logs — can be large and are machine-specific
+backups/pgbackrest/
+backups/logs/
+backups/wal_archive/
+backups/full/
+backups/backup.log
+
+# Other
+temp.md

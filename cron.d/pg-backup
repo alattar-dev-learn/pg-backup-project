@@ -1,0 +1,10 @@
+# pg-backup cron jobs
+
+# Full backup every Friday at 2AM
+0 2 * * 5 postgres /scripts/backup/full.sh >> /backups/logs/backup.log 2>&1
+
+# Differential backup Saturday–Thursday at 2AM
+0 2 * * 0-4,6 postgres /scripts/backup/differential.sh >> /backups/logs/backup.log 2>&1
+
+# Health check every hour
+0 * * * * postgres /scripts/maintenance/health_check.sh >> /backups/logs/health.log 2>&1
