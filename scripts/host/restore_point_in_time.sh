@@ -1,13 +1,8 @@
 #!/bin/bash
 set -euo pipefail
+export MSYS_NO_PATHCONV=1
 
 TARGET_TIME=${1:-}
-
-if [ -z "$TARGET_TIME" ]; then
-    echo "Usage: $0 \"YYYY-MM-DD HH:MM:SS\""
-    echo "Example: $0 \"2026-05-10 14:59:50\""
-    exit 1
-fi
 
 echo "[INFO] Stopping PostgreSQL..."
 docker compose stop postgres

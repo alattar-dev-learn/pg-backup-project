@@ -53,11 +53,17 @@ docker compose up --build
 ### View Backup Logs
 
 ```bash
-# All backup activity (full, diff, errors, WAL archiving)
-tail -f ./backups/logs/backup.log
+# Backup activity
+tail -f ./backups/logs/main-backup.log
 
-# Health check results
-tail -f ./backups/logs/health.log
+# Expiry/retention activity
+tail -f ./backups/logs/main-expire.log
+
+# Restore activity
+tail -f ./backups/logs/main-restore.log
+
+# Verify results
+tail -f ./backups/logs/main-verify.log
 ```
 
 ### Verify WAL Archiving is Working
@@ -65,20 +71,10 @@ tail -f ./backups/logs/health.log
 WAL files are continuously archived to `/backups/pgbackrest/archive/default/`. Each WAL segment is compressed with lz4.
 
 ```bash
-ls -lh ./backups/pgbackrest/archive/default/
+ls -lh ./backups/pgbackrest/archive/main/
 ```
 
 Each WAL file should be ~16MB uncompressed, ~1-2MB compressed.
-
-### Check pgBackRest Configuration
-
-```bash
-# View the active config
-docker exec -u postgres pg_backup_db cat /etc/pgbackrest/pgbackrest.conf
-
-# Get detailed stanza info
-docker exec -u postgres pg_backup_db pgbackrest info --output=json
-```
 
 ---
 

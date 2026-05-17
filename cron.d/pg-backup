@@ -1,6 +1,7 @@
 # pg-backup cron jobs
 
 # Full backup every Friday at 2AM
+# min hour day month weekday
 0 2 * * 5 postgres /scripts/backup/full.sh >> /backups/logs/backup.log 2>&1
 
 # Differential backup Saturday–Thursday at 2AM

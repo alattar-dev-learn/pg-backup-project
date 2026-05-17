@@ -1,12 +1,14 @@
 #!/bin/bash
 set -euo pipefail
+export MSYS_NO_PATHCONV=1
 
 MAX_AGE_HOURS=25
 ALERT_MARKER="[ALERT]"
 LOG_PREFIX="[HEALTH CHECK] $(date +%F_%H-%M-%S)"
 
 # Get latest backup stop time via JSON output
-LAST_BACKUP=$(pgbackrest --stanza=main info --output=json | jq -r '.[] | .backup[-1].timestamp.stop | if . then (. | todate) else "" end' 2>/dev/null)
+PGBACKREST_JSON=$(pgbackrest --stanza=main info --output=json --log-level-console=off 2>/dev/null)
+LAST_BACKUP=$(echo "$PGBACKREST_JSON" | jq -r '.[] | .backup[-1].timestamp.stop | if . then (. | todate) else "" end')
 
 if [ -z "$LAST_BACKUP" ]; then
     echo "$LOG_PREFIX $ALERT_MARKER No backups found in repository!"

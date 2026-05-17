@@ -2,7 +2,7 @@ FROM postgres:15
 
 # Install cron and pgBackRest
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends cron pgbackrest \
+    && apt-get install -y --no-install-recommends cron pgbackrest jq \
     && rm -rf /var/lib/apt/lists/*
 
 COPY postgresql.conf /etc/postgresql/postgresql.conf

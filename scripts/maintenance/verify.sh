@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+export MSYS_NO_PATHCONV=1
 
 pgbackrest --stanza=main verify
 
