@@ -25,7 +25,7 @@ RUN chmod +x /scripts/backup/*.sh /scripts/restore/*.sh /scripts/maintenance/*.s
 
 # Jobs run as the `postgres` OS user so pgBackRest can use peer auth
 COPY cron.d/pg-backup /etc/cron.d/pg-backup
-RUN chmod 0644 /etc/cron.d/pg-backup
+RUN sed -i 's/\r//' /etc/cron.d/pg-backup && chmod 0644 /etc/cron.d/pg-backup
 
 # Entrypoint: prepare directories, create stanza, start cron, then start postgres
 COPY scripts/docker/entrypoint.sh /entrypoint.sh
